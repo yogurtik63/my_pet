@@ -26,6 +26,7 @@ class _PetCreatePageState extends State<PetCreatePage> {
 
     pet.name = newPetName;
     pet.animalType = getAnimalType(_selectedAnimal)!;
+    pet.setImage();
 
     widget.callbackParent();
     widget.callbackMain();
@@ -65,7 +66,7 @@ class _PetCreatePageState extends State<PetCreatePage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: Image.asset("asset_files/images/no_photo.jpg").image,
+                                image: pet.image.image,
                               ),
                             ),
                           )
@@ -76,7 +77,7 @@ class _PetCreatePageState extends State<PetCreatePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 300,
+                                width: 200,
                                 child: TextFormField(
                                   onChanged: (text) {
                                     newPetName = text;

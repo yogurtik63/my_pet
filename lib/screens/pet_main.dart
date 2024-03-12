@@ -58,7 +58,7 @@ class _PetMainPageState extends State<PetMainPage> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) => PetCreatePage(
                               title: "Новый питомец",
-                              pet: Pet("", AnimalType.hamster),
+                              pet: Pet("", AnimalType.noExist),
                               callbackParent: callback,
                               callbackMain: callback)),
                         );
@@ -71,70 +71,76 @@ class _PetMainPageState extends State<PetMainPage> {
 
           const Divider(height: 16, color: Color.fromRGBO(0, 0, 0, 0),),
 
-          ListView.separated(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => PetInfoPage(title: gPets[index].name, pet: gPets[index], callback: callback)),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15))
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
-                              child:
-                                Row(
-                                  children: [
-                                    Container(
-                                    width: 80.0,
-                                    height: 80.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: gPets[index].image.image,
-                                      ),
+          Expanded(
+              child: SingleChildScrollView(
+                child:
+                ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => PetInfoPage(title: gPets[index].name, pet: gPets[index], callback: callback)),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(15))
+                            ),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
+                                    child:
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 80.0,
+                                          height: 80.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: gPets[index].image.image,
+                                            ),
+                                          ),
+                                        ),
+
+                                        const VerticalDivider(width: 16, color: Color.fromRGBO(0, 0, 0, 0)),
+
+                                        Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  gPets[index].name,
+                                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                                              Text(
+                                                  getAnimalTypeStr(gPets[index].animalType),
+                                                  style: Theme.of(context).textTheme.labelLarge)
+                                            ]
+                                        ),
+                                      ],
                                     ),
                                   ),
-
-                                  const VerticalDivider(width: 16, color: Color.fromRGBO(0, 0, 0, 0)),
-
-                                  Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            gPets[index].name,
-                                            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                                        Text(
-                                            getAnimalTypeStr(gPets[index].animalType),
-                                            style: Theme.of(context).textTheme.labelLarge)
-                                      ]
-                                  ),
-                                ],
-                              ),
-                          ),
-                          const Icon(Icons.arrow_forward_ios)
-                        ]
-                    ),
-                  )
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(height: 16, indent: 10, endIndent: 10),
-              itemCount: gPets.length
-          ),
+                                  const Icon(Icons.arrow_forward_ios)
+                                ]
+                            ),
+                          )
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(height: 16, indent: 10, endIndent: 10),
+                    itemCount: gPets.length
+                ),
+              )
+          )
         ]
       )
     )

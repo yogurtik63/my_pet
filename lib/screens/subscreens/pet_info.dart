@@ -163,69 +163,72 @@ class _PetInfoPageState extends State<PetInfoPage> {
 
               const Divider(height: 16, color: Color.fromRGBO(0, 0, 0, 0)),
 
-              SingleChildScrollView(
-                child: ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Container(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(15))
+              Expanded(
+                child: SingleChildScrollView(
+                    child: ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
-                                      child:
-                                      Row(
-                                        children: [
-                                          Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                    pet.events[index].note,
-                                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                                                Text(
-                                                    DateFormat('dd/MM/yyyy HH:mm a').format(pet.events[index].date),
-                                                    style: Theme.of(context).textTheme.labelLarge)
-                                              ]
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Ink(
-                                        decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                        ),
+                              child: Container(
+                                padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(Radius.circular(15))
+                                ),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
                                         child:
-                                        IconButton(
-                                          // iconSize: 32,
-                                            onPressed: () {
-                                              gEvents.remove(pet.events[index]);
-                                              pet.events.remove(pet.events[index]);
-                                              setState(() {});
-                                            },
-                                            icon: const Icon(Icons.delete)
-                                        )
-                                    ),
-                                  ]
-                              ),
-                            )
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(height: 16, indent: 10, endIndent: 10),
-                      itemCount: pet.events.length
-                  )
-              ),
+                                        Row(
+                                          children: [
+                                            Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      pet.events[index].note,
+                                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                                                  Text(
+                                                      DateFormat('dd/MM/yyyy HH:mm a').format(pet.events[index].date),
+                                                      style: Theme.of(context).textTheme.labelLarge)
+                                                ]
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Ink(
+                                          decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child:
+                                          IconButton(
+                                            // iconSize: 32,
+                                              onPressed: () {
+                                                gEvents.remove(pet.events[index]);
+                                                pet.events.remove(pet.events[index]);
+                                                setState(() {});
+                                              },
+                                              icon: const Icon(Icons.delete)
+                                          )
+                                      ),
+                                    ]
+                                ),
+                              )
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(height: 16, indent: 10, endIndent: 10),
+                        itemCount: pet.events.length
+                    )
+                ),
+              )
             ]
           )
       )

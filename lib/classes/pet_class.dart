@@ -13,6 +13,7 @@ class Pet {
   Pet(String name, AnimalType animalType) {
     this.name = name;
     this.animalType = animalType;
+    setImage();
   }
 
   setNote(String note) {
@@ -42,6 +43,7 @@ class Pet {
         this.image = Image.asset('asset_files/images/hamster.jpg');
         break;
       case AnimalType.noExist:
+        this.image = Image.asset("asset_files/images/no_photo.jpg");
         break;
     }
   }

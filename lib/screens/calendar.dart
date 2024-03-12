@@ -72,52 +72,55 @@ class _CalendarPageState extends State<CalendarPage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              children: [
-                TableCalendar(
-                    calendarFormat: CalendarFormat.month,
-                    availableCalendarFormats: const {CalendarFormat.month: 'month'},
-                    eventLoader: _getEventsForTheDay,
-                    focusedDay: _focusedDay,
-                    firstDay: _firstDay,
-                    lastDay: _lastDay,
-                    selectedDayPredicate: (day) => isSameDay(day, gSelectedDate),
-                    onPageChanged: (focusedDay) {
-                      setState(() {
-                        _focusedDay = focusedDay;
-                      });
-                    },
-                    onDaySelected: (selectedDay, focusedDay) {
-                      setState(() {
-                        gSelectedDate = selectedDay;
-                        _focusedDay = focusedDay;
-                      });
-                    }
-                ),
-                ..._getEventsForTheDay(gSelectedDate).map(
-                      (event) => ListTile(
-                        title: Text(
-                          event.note,
-                        ),
-                        subtitle: Text(
-                            DateFormat('dd/MM/yyyy HH:mm a').format(event.date)),
-                        trailing: IconButton(
-                          // iconSize: 32,
-                            onPressed: () {
-                              gEvents.remove(event);
-                              event.refPet.events.remove(event);
-                              _events = <DateTime, List<Event>>{};
-                              _loadGlobalEvents();
-                              setState(() {});
-                            },
-                            icon: const Icon(Icons.delete)
-                        )
+            Expanded(
+                child:
+                ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    TableCalendar(
+                        calendarFormat: CalendarFormat.month,
+                        availableCalendarFormats: const {CalendarFormat.month: 'month'},
+                        eventLoader: _getEventsForTheDay,
+                        focusedDay: _focusedDay,
+                        firstDay: _firstDay,
+                        lastDay: _lastDay,
+                        selectedDayPredicate: (day) => isSameDay(day, gSelectedDate),
+                        onPageChanged: (focusedDay) {
+                          setState(() {
+                            _focusedDay = focusedDay;
+                          });
+                        },
+                        onDaySelected: (selectedDay, focusedDay) {
+                          setState(() {
+                            gSelectedDate = selectedDay;
+                            _focusedDay = focusedDay;
+                          });
+                        }
                     ),
-                  ),
-                ],
-              ),
+                    ..._getEventsForTheDay(gSelectedDate).map(
+                          (event) => ListTile(
+                          title: Text(
+                            event.note,
+                          ),
+                          subtitle: Text(
+                              DateFormat('dd/MM/yyyy HH:mm a').format(event.date)),
+                          trailing: IconButton(
+                            // iconSize: 32,
+                              onPressed: () {
+                                gEvents.remove(event);
+                                event.refPet.events.remove(event);
+                                _events = <DateTime, List<Event>>{};
+                                _loadGlobalEvents();
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.delete)
+                          )
+                      ),
+                    ),
+                  ],
+                ),
+            )
           ]
         )
       )

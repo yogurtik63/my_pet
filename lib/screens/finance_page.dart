@@ -92,79 +92,82 @@ class _FinancePageWidgetState extends State<FinancePageWidget> {
                         ]
                     )
                   ),
-
-                  SingleChildScrollView(
-                      child: ListView.separated(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                                customBorder: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(Radius.circular(15))
+                  Expanded(
+                    child:
+                    SingleChildScrollView(
+                        child: ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                  customBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
-                                          child:
-                                          Row(
-                                            children: [
-                                              Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        "${gFinance[index].cost}₽",
-                                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-
-                                                    gFinance[index].note != "" ?
-                                                        Text(gFinance[index].note,
-                                                            style: Theme.of(context).textTheme.titleMedium) :
-                                                        const Divider(height: 0,),
-
-                                                    Text(
-                                                        DateFormat('dd/MM/yyyy').format(gFinance[index].date),
-                                                        style: Theme.of(context).textTheme.labelLarge)
-                                                  ]
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Ink(
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                              shape: BoxShape.circle,
-                                            ),
+                                  child: Container(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(Radius.circular(15))
+                                    ),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
                                             child:
-                                            IconButton(
-                                              // iconSize: 32,
-                                                onPressed: () {
-                                                  pieData[getFinanceTypeID(gFinance[index].financeType)].yData -= gFinance[index].cost;
-                                                  if (pieData[getFinanceTypeID(gFinance[index].financeType)].yData < 0) {
-                                                    pieData[getFinanceTypeID(gFinance[index].financeType)].yData = 0;
-                                                  }
-                                                  gFinance.remove(gFinance[index]);
-                                                  setState(() {});
-                                                },
-                                                icon: const Icon(Icons.delete)
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                )
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(height: 16, indent: 10, endIndent: 10),
-                          itemCount: gFinance.length
-                      )
-                  ),
+                                            Row(
+                                              children: [
+                                                Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                          "${gFinance[index].cost}₽",
+                                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+
+                                                      gFinance[index].note != "" ?
+                                                      Text(gFinance[index].note,
+                                                          style: Theme.of(context).textTheme.titleMedium) :
+                                                      const Divider(height: 0,),
+
+                                                      Text(
+                                                          DateFormat('dd/MM/yyyy').format(gFinance[index].date),
+                                                          style: Theme.of(context).textTheme.labelLarge)
+                                                    ]
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Ink(
+                                              decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child:
+                                              IconButton(
+                                                // iconSize: 32,
+                                                  onPressed: () {
+                                                    pieData[getFinanceTypeID(gFinance[index].financeType)].yData -= gFinance[index].cost;
+                                                    if (pieData[getFinanceTypeID(gFinance[index].financeType)].yData < 0) {
+                                                      pieData[getFinanceTypeID(gFinance[index].financeType)].yData = 0;
+                                                    }
+                                                    gFinance.remove(gFinance[index]);
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(Icons.delete)
+                                              )
+                                          ),
+                                        ]
+                                    ),
+                                  )
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(height: 16, indent: 10, endIndent: 10),
+                            itemCount: gFinance.length
+                        )
+                    ),
+                  )
                 ]
             )
         )
